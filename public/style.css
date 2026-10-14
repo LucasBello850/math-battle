@@ -1,0 +1,117 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: #0b1020;
+}
+
+.jogo {
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    text-align: center;
+    background: #171f35;
+    border: 1px solid #34415e;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px #0006;
+}
+
+h1 {
+    margin-bottom: 8px;
+    color: #67e8f9;
+    letter-spacing: 3px;
+}
+
+.subtitulo {
+    color: #a9b5cc;
+    margin-bottom: 28px;
+}
+
+.painel {
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+}
+
+.informacao {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    flex: 1;
+    background: #222e49;
+    border-radius: 12px;
+}
+
+.informacao span {
+    font-size: 12px;
+    color: #a9b5cc;
+}
+
+.informacao strong {
+    font-size: 25px;
+}
+
+.questao {
+    margin: 30px 0;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+input, button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+input {
+    margin-bottom: 12px;
+    border: 1px solid #465575;
+    background: #0b1020;
+    color: white;
+    text-align: center;
+}
+
+button {
+    border: none;
+    background: #22d3ee;
+    color: #0b1020;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(1.1);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.iniciar {
+    margin-top: 12px;
+    background: #a3e635;
+}
+
+#mensagem {
+    min-height: 24px;
+    color: #a3e635;
+}
+
+.rodape {
+    margin-top: 28px;
+    font-size: 12px;
+    color: #8491aa;
+}

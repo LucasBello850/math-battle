@@ -1,0 +1,94 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Battle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="jogo">
+        <h1>MATH BATTLE</h1>
+        <p class="subtitulo">Pense rápido. Acerte mais. Vença!</p>
+
+        <section id="painelSala">
+            <h2>Multiplayer</h2>
+
+            <input
+                id="nomeJogador"
+                type="text"
+                maxlength="20"
+                placeholder="Seu nome"
+                autocomplete="nickname"
+            >
+
+            <button id="botaoCriar" type="button">
+                CRIAR SALA
+            </button>
+
+            <p>Ou entre em uma sala existente:</p>
+
+            <input
+                id="codigoSala"
+                type="text"
+                maxlength="5"
+                placeholder="Código da sala"
+                autocomplete="off"
+            >
+
+            <button id="botaoEntrar" type="button">
+                ENTRAR NA SALA
+            </button>
+        </section>
+
+        <section id="painelPartida" hidden>
+            <p>Código da sala</p>
+            <h2 id="codigoExibido">-----</h2>
+
+            <h3>Jogadores</h3>
+            <ul id="listaJogadores"></ul>
+
+            <button id="botaoIniciar" type="button" disabled>
+                INICIAR PARTIDA
+            </button>
+
+            <div class="painel">
+                <div class="informacao">
+                    <span>⏱ TEMPO</span>
+                    <strong id="tempo">02:00</strong>
+                </div>
+
+                <div class="informacao">
+                    <span>🏆 SEUS ACERTOS</span>
+                    <strong id="pontos">0</strong>
+                </div>
+            </div>
+
+            <div id="questao" class="questao">---</div>
+
+            <form id="formulario">
+                <input
+                    id="resposta"
+                    type="number"
+                    placeholder="Sua resposta"
+                    required
+                    autocomplete="off"
+                    disabled
+                >
+                <button type="submit" id="botaoResponder" disabled>
+                    RESPONDER
+                </button>
+            </form>
+        </section>
+
+        <p id="mensagem">Crie uma sala ou entre usando um código.</p>
+
+        <p class="rodape">Math Battle · Desafie sua mente</p>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
