@@ -210,6 +210,75 @@ io.on("connection", socket => {
             }
         }, 1000);
     });
+    socket.on("solicitarRevanche", codigoRecebido => {
+    const codigo = String(codigoRecebido || "")
+        .trim()
+        .toUpperCase();
+
+    const sala = salas.get(codigo);
+
+    if (!sala) {
+        socket.emit("erroJogo", "Sala não encontrada.");
+        return;
+    }
+
+    if (sala.status !== "encerrada") {
+        socket.emit(
+            "erroJogo",
+            "A revanche só pode ser iniciada após o fim da partida."
+        );
+        return;
+    }
+
+    const jogadorNaSala = sala.jogadores.some(
+        jogador => jogador.id === socket.id
+    );
+
+    if (!jogadorNaSala) {
+        socket.emit("erroJogo", "Você não pertence a esta sala.");
+        return;
+    }
+
+    if (sala.jogadores.length !== 2) {
+        socket.emit(
+            "erroJogo",
+            "São necessários dois jogadores para a revanche."
+        );
+        return;
+    }
+
+    sala.status = "jogando";
+    sala.tempoRestante = 120;
+
+    // Zera a pontuação e gera uma nova questão para cada jogador.
+    for (const jogador of sala.jogadores) {
+        jogador.pontos = 0;
+        jogador.questao = gerarQuestao();
+    }
+
+    io.to(codigo).emit("partidaIniciada", {
+        tempoRestante: sala.tempoRestante
+    });
+
+    for (const jogador of sala.jogadores) {
+        enviarQuestao(jogador);
+    }
+
+    atualizarSala(codigo);
+
+    sala.intervalo = setInterval(() => {
+        sala.tempoRestante--;
+
+        io.to(codigo).emit(
+            "tempoAtualizado",
+            sala.tempoRestante
+        );
+
+        if (sala.tempoRestante <= 0) {
+            encerrarPartida(codigo);
+        }
+    }, 1000);
+});
 
     socket.on("responderQuestao", dados => {
         const codigo = String(dados?.codigo || "")

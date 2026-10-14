@@ -10,6 +10,7 @@ const botaoCriar = document.getElementById("botaoCriar");
 const botaoEntrar = document.getElementById("botaoEntrar");
 const botaoIniciar = document.getElementById("botaoIniciar");
 const botaoResponder = document.getElementById("botaoResponder");
+const botaoRevanche = document.getElementById("botaoRevanche");
 
 const codigoExibido = document.getElementById("codigoExibido");
 const listaJogadores = document.getElementById("listaJogadores");
@@ -119,6 +120,9 @@ botaoIniciar.addEventListener("click", () => {
 
 socket.on("partidaIniciada", dados => {
     jogando = true;
+    botaoRevanche.hidden = true;
+    botaoRevanche.disabled = false;
+
     elementoTempo.textContent = "02:00";
     elementoMensagem.textContent = "Valendo! Boa sorte!";
 
@@ -175,6 +179,7 @@ socket.on("fimPartida", resultado => {
     jogando = false;
     campoResposta.disabled = true;
     botaoResponder.disabled = true;
+    botaoRevanche.hidden = false;
 
     const primeiro = resultado[0];
     const segundo = resultado[1];
@@ -192,6 +197,18 @@ socket.on("fimPartida", resultado => {
             `Vitória de ${primeiro.nome}, com ${primeiro.pontos} pontos!`;
     }
 });
+
+botaoRevanche.addEventListener("click", () => {
+    if (!minhaSala) return;
+
+    socket.emit("solicitarRevanche", minhaSala);
+
+    botaoRevanche.disabled = true;
+    elementoMensagem.textContent =
+        "Solicitação de revanche enviada...";
+});
+
+
 
 socket.on("erroJogo", mensagem => {
     elementoMensagem.textContent = mensagem;
